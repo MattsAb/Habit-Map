@@ -6,13 +6,13 @@ import DayComponent from './dayComponent'
 const WeekComponent = () => {
   return (
     <View style={styles.container}>
-        <DayComponent/>
-        <DayComponent/>
-        <DayComponent/>
-        <DayComponent/>
-        <DayComponent/>
-        <DayComponent/>
-        <DayComponent/>
+        <DayComponent day='Monday'/>
+        <DayComponent day='Tuesday'/>
+        <DayComponent day='Wednesday'/>
+        <DayComponent day='Thursday'/>
+        <DayComponent day='Friday'/>
+        <DayComponent day='Saturday'/>
+        <DayComponent day='Sunday'/>
     </View>
   )
 }

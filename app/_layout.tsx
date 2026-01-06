@@ -2,8 +2,11 @@ import React from 'react'
 import { Tabs } from 'expo-router'
 import { Ionicons } from "@expo/vector-icons"
 
+import HabitContext from '../src/context/habitContext'
+
 const RootLayout = () => {
   return (
+    <HabitContext>
     <Tabs 
         screenOptions={{headerTitleAlign: "center"}}
     >
@@ -12,7 +15,9 @@ const RootLayout = () => {
         <Tabs.Screen name='index' options={{tabBarIcon: () => (<Ionicons name="home" size={32} color="black" /> ), title: "home"}}/>
         <Tabs.Screen name='streaks' options={{tabBarIcon: () => (<Ionicons name="analytics" size={32} color="black" /> )}}/>
         <Tabs.Screen name='habits' options={{tabBarIcon: () => (<Ionicons name="cube" size={32} color="black" /> )}}/>
+        <Tabs.Screen name="day/[day]"options={{ href: null }}/>
     </Tabs>
+    </HabitContext>
   )
 }
 

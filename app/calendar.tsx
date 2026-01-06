@@ -7,9 +7,6 @@ const calendar = () => {
   return (
     <View style={styles.container}>
       <WeekComponent/>
-      <WeekComponent/>
-      <WeekComponent/>
-      <WeekComponent/>
     </View>
   )
 }

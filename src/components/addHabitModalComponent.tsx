@@ -3,16 +3,19 @@ import React, { useState } from 'react'
 import { SegmentedButtons } from "react-native-paper";
 
 import HabitComponent from './habitComponent'
+import { useHabit } from '../context/habitContext';
 
-type modalProps = {
+type addModalProps = {
   visibility: boolean,
   onCancel: () => void,
   onAdd: () => void,
 }
 
-const AddHabitModalComponent = ({visibility, onAdd, onCancel}: modalProps) => {
+const AddHabitModalComponent = ({visibility, onAdd, onCancel}: addModalProps) => {
 
   const [titleInput, setTitleInput] = useState('')
+
+  const {createHabit} = useHabit()
 
 
   return (
@@ -33,12 +36,16 @@ const AddHabitModalComponent = ({visibility, onAdd, onCancel}: modalProps) => {
                     </View>
                 </View>
                 <View style={{flexDirection: "row", marginVertical: 10,}}>
+                    <TouchableOpacity style={[styles.button, {backgroundColor: "#5dcf70ff"}]}
+                    onPress={() => {
+                      onAdd()
+                      createHabit(titleInput)
+                      setTitleInput('')
+                    }}>
+                      <Text style={{color: "white"}}> Add </Text></TouchableOpacity>
                     <TouchableOpacity style={[styles.button, {backgroundColor: "#df7878ff"}]}
                     onPress={onCancel}
                     ><Text style={{color: "white"}}> Cancel </Text></TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, {backgroundColor: "#5dcf70ff"}]}
-                    onPress={onAdd}
-                    ><Text style={{color: "white"}}> Add </Text></TouchableOpacity>
                 </View>
             </View>
         </View>
