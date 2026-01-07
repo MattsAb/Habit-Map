@@ -2,8 +2,8 @@ import { View, Text, Modal, StyleSheet, TextInput, TouchableOpacity } from 'reac
 import React, { useState } from 'react'
 import { SegmentedButtons } from "react-native-paper";
 
-import HabitComponent from './habitComponent'
-import { useHabit } from '../context/habitContext';
+import HabitComponent from '../habitComponent'
+import { useHabits } from '../../context/habitContext';
 
 type addModalProps = {
   visibility: boolean,
@@ -15,7 +15,7 @@ const AddHabitModalComponent = ({visibility, onAdd, onCancel}: addModalProps) =>
 
   const [titleInput, setTitleInput] = useState('')
 
-  const {createHabit} = useHabit()
+  const {createHabit} = useHabits()
 
 
   return (

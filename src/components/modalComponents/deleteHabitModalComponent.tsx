@@ -1,7 +1,7 @@
 import { View, Text, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-import HabitComponent from './habitComponent'
+import HabitComponent from '../habitComponent'
 
 type deleteModalProps = {
   visibility: boolean,

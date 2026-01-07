@@ -17,7 +17,7 @@ type HabitContextType = {
 const GlobalHabitContext = createContext<HabitContextType | undefined>(undefined)
 
 
-export const useHabit = () => {
+export const useHabits = () => {
   const context = useContext(GlobalHabitContext)
 
   if (!context) {
@@ -29,7 +29,9 @@ export const useHabit = () => {
 
 const HabitContext = ({ children }: { children: React.ReactNode }) => {
 
-    const [habits, setHabits] = useState<Habit[]>([])
+    const [habits, setHabits] = useState<Habit[]>([{name: "test", streak: 1, id: "1"}, {name: "test2", streak: 2, id: "2"},{name: "test3", streak: 0, id: "3"},
+        {name: "test4", streak: 1, id: "4"}, {name: "test5", streak: 2, id: "5"},{name: "test6", streak: 0, id: "6"}
+    ])
 
     const createHabit = (name: string) => {
         if (!name.trim()) return
@@ -46,7 +48,7 @@ const HabitContext = ({ children }: { children: React.ReactNode }) => {
 
 
   return (
-    <GlobalHabitContext.Provider value={{habits, setHabits, createHabit, deleteHabit} as any}>
+    <GlobalHabitContext.Provider value={{habits, createHabit, deleteHabit}}>
         {children}
     </GlobalHabitContext.Provider>
   )

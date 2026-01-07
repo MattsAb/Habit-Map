@@ -1,15 +1,16 @@
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 
-import AddHabitModalComponent from '../src/components/addHabitModalComponent'
-import DeleteHabitModalComponent from '../src/components/deleteHabitModalComponent'
+import AddHabitModalComponent from '../src/components/modalComponents/addHabitModalComponent'
+import DeleteHabitModalComponent from '../src/components/modalComponents/deleteHabitModalComponent'
 import HabitCardComponent from '../src/components/habitCardComponent'
-import { useHabit } from '../src/context/habitContext'
+import ButtonComponent from '../src/components/basicComponents/ButtonComponent'
+import { useHabits } from '../src/context/habitContext'
 
 
 const habits = () => {
 
-const {habits, deleteHabit} = useHabit()
+const {habits, deleteHabit} = useHabits()
 
 const [addModalVisibility, setAddModalVisibility] = useState(false)
 const [deleteModalVisibility, setDeleteModalVisibility] = useState(false)
@@ -17,10 +18,8 @@ const [selectedhabit, setSelectedHabit] = useState({name: "", id: ""})
 
   return (
     <View style={styles.container}>
-        <TouchableOpacity style={styles.addButton}
-        onPress={() => setAddModalVisibility(true)}
-        ><Text style={{color: "white"}}> Add New Habit </Text></TouchableOpacity>
 
+        <ButtonComponent title='Add New Habit' color='#6ad66aff' onPress={() => setAddModalVisibility(true)}/>
 
           { habits.length > 0 ? (<ScrollView showsVerticalScrollIndicator={false}>
             {habits.map((habit) => (
@@ -61,12 +60,5 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     alignItems: "center",
-  },
-  addButton:{
-    backgroundColor: "#57ce7fff",
-    padding: 20,
-    borderRadius: 30,
-    marginVertical: 10
   }
-
 })

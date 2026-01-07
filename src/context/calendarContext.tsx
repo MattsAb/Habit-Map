@@ -1,10 +1,19 @@
 import { View, Text } from 'react-native'
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
-
+export type Week = {
+  monday: string[]
+  tuesday: string[]
+  wednesday: string[]
+  thursday: string[]
+  friday: string[]
+  saturday: string[]
+  sunday: string[]
+}
 
 type CalendarContextType = {
-
+    weekHabits: Week
+    addHabitToDay: (day: keyof Week, habitIds: string[]) => void
 }
 
 const GlobalCalendarContext = createContext<CalendarContextType | undefined>(undefined)
@@ -20,13 +29,30 @@ export const useCalendar = () => {
   return context
 }
 
-const CalendarContext = () => {
+const CalendarContext = ({ children }: { children: React.ReactNode }) => {
 
+    const [weekHabits, setWeekHabits] = useState<Week>({
+    monday: ['1','2','3','4','5','6'],
+    tuesday: ['1','2'],
+    wednesday: [],
+    thursday: ['3','4', '5'],
+    friday: [],
+    saturday: [`1`,`2`,'3','4'],
+    sunday: [],
+    })
+
+  const addHabitToDay = (day: keyof Week, habitIds: string[]) => {
+    setWeekHabits(prev => ({
+      ...prev,
+      [day]: habitIds
+    }))
+}
     
   return (
-    <View>
-      <Text>calendarContext</Text>
-    </View>
+    <GlobalCalendarContext.Provider value={{weekHabits, addHabitToDay}}>
+        {children}
+    </GlobalCalendarContext.Provider>
+    
   )
 }
 
