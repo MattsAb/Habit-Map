@@ -14,11 +14,14 @@ const DayComponent = ({day, totalHabits}: dayProps) => {
     const dayColor = totalHabits ? `rgba(${200 - totalHabits * 10}, 255, ${200 - totalHabits * 10}, 1)` : "grey"
 
   return (
+    <View style={{alignItems: "center"}}>
+      <Text> {day.substring(0,3)} </Text>
     <TouchableOpacity style={[styles.container, {backgroundColor: dayColor}]}
     onPress={() =>  router.push(`/day/${day}`)
 }>
-      <Text style={{color: "white", fontWeight: "bold", fontSize: 20, shadowColor: "black", textShadowOffset: {width: 10,height:10}}}>{totalHabits ? `${totalHabits}` : '0'}</Text>
+      <Text style={{color: "white", fontWeight: "bold", fontSize: 20, shadowColor: "black", }}>{totalHabits ? `${totalHabits}` : '0'}</Text>
     </TouchableOpacity>
+    </View>
   )
 }
 

@@ -27,13 +27,14 @@ const [selectedhabit, setSelectedHabit] = useState({name: "", id: ""})
                 key={habit.id}
                 habitName={habit.name}
                 streak={habit.streak}
+                completions={habit.totalCompletes}
                 onDeletePress={() => {
                   setDeleteModalVisibility(true)
                   setSelectedHabit({name: habit.name, id: habit.id})
                 }}
               />
             ))}
-          </ScrollView>) : (<View style={{justifyContent:"center", flex: 1}}><Text> You don't have any habits </Text></View>)
+          </ScrollView>) : (<View style={styles.noHabitsText}><Text> You don't have any habits </Text></View>)
 }
 
 
@@ -60,5 +61,9 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     alignItems: "center",
+  },
+    noHabitsText: {
+    justifyContent:"center",
+     flex: 1
   }
 })

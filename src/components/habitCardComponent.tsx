@@ -7,16 +7,18 @@ type habitCardProps = {
     onDeletePress: () => void,
     habitName: string,
     streak: number,
+    completions: number,
 }
 
-const HabitCardComponent = ({onDeletePress, habitName, streak}: habitCardProps) => {
+const HabitCardComponent = ({onDeletePress, habitName, streak, completions}: habitCardProps) => {
   return (
     <View style={styles.container}>
 
         <View style={styles.cardcontainer}>
             <HabitComponent title={habitName}/>
             <View style={styles.textContainer}>
-                <Text>Streak: {streak} </Text>
+                <Text style={{marginVertical: 10}}>🔥: {streak} </Text>
+                <Text style={{marginVertical: 10}}>✅: {completions} </Text>
             </View>
         </View>
 
@@ -46,9 +48,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 20,
         borderRadius: 30,
+        width: "65%"
     },
     textContainer:{
-        marginLeft: 10
+        marginLeft: 30,
+        width: "40%"
     },
     button:{
         backgroundColor: "#f07c7cff",

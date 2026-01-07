@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginVertical: 30,
+    justifyContent: "center"
   },
   listItem:{
     margin: 2,

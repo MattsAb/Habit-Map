@@ -5,6 +5,7 @@ import uuid from 'react-native-uuid';
 export type Habit = {
     name: string,
     streak: number,
+    totalCompletes: number,
     id: string,
 }
 
@@ -29,8 +30,9 @@ export const useHabits = () => {
 
 const HabitContext = ({ children }: { children: React.ReactNode }) => {
 
-    const [habits, setHabits] = useState<Habit[]>([{name: "test", streak: 1, id: "1"}, {name: "test2", streak: 2, id: "2"},{name: "test3", streak: 0, id: "3"},
-        {name: "test4", streak: 1, id: "4"}, {name: "test5", streak: 2, id: "5"},{name: "test6", streak: 0, id: "6"}
+    const [habits, setHabits] = useState<Habit[]>([{name: "test", streak: 1, id: "1", totalCompletes: 1},
+      {name: "test2", streak: 2, id: "2", totalCompletes: 2},{name: "test3", streak: 0, id: "3", totalCompletes: 0},
+        {name: "test4", streak: 1, id: "4", totalCompletes: 1444}, {name: "test5", streak: 2, id: "5", totalCompletes: 2},{name: "test6", streak: 0, id: "6", totalCompletes: 0}
     ])
 
     const createHabit = (name: string) => {
@@ -38,7 +40,7 @@ const HabitContext = ({ children }: { children: React.ReactNode }) => {
 
         setHabits(prev => [
         ...prev,
-        { name, streak: 0, id: uuid.v4()}
+        { name, streak: 0,totalCompletes: 0, id: uuid.v4()}
         ])
     }
 

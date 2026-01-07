@@ -11,13 +11,15 @@ export type Week = {
   sunday: string[]
 }
 
+export const daysOfWeek: (keyof Week)[] = ['sunday','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
 type CalendarContextType = {
     weekHabits: Week
     addHabitToDay: (day: keyof Week, habitIds: string[]) => void
+    getToday: () => keyof Week
 }
 
 const GlobalCalendarContext = createContext<CalendarContextType | undefined>(undefined)
-
 
 export const useCalendar = () => {
   const context = useContext(GlobalCalendarContext)
@@ -25,7 +27,6 @@ export const useCalendar = () => {
   if (!context) {
     throw new Error('useCalendar must be used within HabitContext')
   }
-
   return context
 }
 
@@ -47,9 +48,16 @@ const CalendarContext = ({ children }: { children: React.ReactNode }) => {
       [day]: habitIds
     }))
 }
+
+const getToday = (): keyof Week =>{
+
+  const date = new Date()
+  return daysOfWeek[date.getDay()]
+
+}
     
   return (
-    <GlobalCalendarContext.Provider value={{weekHabits, addHabitToDay}}>
+    <GlobalCalendarContext.Provider value={{weekHabits, addHabitToDay, getToday}}>
         {children}
     </GlobalCalendarContext.Provider>
     

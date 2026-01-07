@@ -24,7 +24,7 @@ export default function DayScreen() {
     <>
     <Stack.Screen options={{title: `${day}`}}/>
 
-    <View style={{alignItems: "center", justifyContent: "center", flex: 1}}>
+    <View style={{alignItems: "center", flex: 1}}>
 
     {dayHabits.length > 0 ? (
     <ScrollView contentContainerStyle={styles.list}>
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
 list:{
     flexDirection: "row",
     flexWrap: "wrap",
-    marginVertical: 30,
+    marginVertical: 10,
+    justifyContent: "center"
   },
 })

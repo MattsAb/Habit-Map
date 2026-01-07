@@ -1,16 +1,22 @@
-import React from 'react'
-import { Tabs } from 'expo-router'
+import React, { useReducer } from 'react'
+import { Tabs, useRouter } from 'expo-router'
 import { Ionicons } from "@expo/vector-icons"
 
 import HabitContext from '../src/context/habitContext'
 import CalendarContext from '../src/context/calendarContext'
+import { TouchableOpacity } from 'react-native'
 
 const RootLayout = () => {
+
+  const router = useRouter()
+
   return (
     <HabitContext>
       <CalendarContext>
       <Tabs 
-          screenOptions={{headerTitleAlign: "center"}}
+          screenOptions={{headerTitleAlign: "center", headerRight: () => (
+            <TouchableOpacity style={{marginRight: 30}} onPress={() => router.push('./settings')}><Ionicons name="settings" size={40} color="black" /></TouchableOpacity>
+          )}}
       >
           <Tabs.Screen name='calendar' options={{tabBarIcon: () => (<Ionicons name="calendar" size={32} color="black" /> )}}/>
           <Tabs.Screen name='map' options={{tabBarIcon: () => (<Ionicons name="map" size={32} color="black" /> )}}/>
@@ -18,6 +24,7 @@ const RootLayout = () => {
           <Tabs.Screen name='streaks' options={{tabBarIcon: () => (<Ionicons name="analytics" size={32} color="black" /> )}}/>
           <Tabs.Screen name='habits' options={{tabBarIcon: () => (<Ionicons name="cube" size={32} color="black" /> )}}/>
           <Tabs.Screen name="day/[day]"options={{ href: null }}/>
+          <Tabs.Screen name="settings"options={{ href: null }}/>
       </Tabs>
       </CalendarContext>
     </HabitContext>

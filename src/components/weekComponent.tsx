@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import React, { useContext } from 'react'
 
 import DayComponent from './dayComponent'
-import CalendarContext, { useCalendar } from '../context/calendarContext'
+import { useCalendar } from '../context/calendarContext'
 
 const WeekComponent = () => {
 
