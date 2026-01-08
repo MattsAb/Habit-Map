@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { useContext } from 'react'
+import { View, StyleSheet } from 'react-native'
+import React from 'react'
 
 import DayComponent from './dayComponent'
 import { useCalendar } from '../context/calendarContext'

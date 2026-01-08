@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useHeaderHeight } from '@react-navigation/elements';
 
 
-import { useHabits } from '../src/context/habitContext'
-import { useCalendar, Week } from '../src/context/calendarContext'
+import { useHabits } from '../../src/context/habitContext'
+import { useCalendar } from '../../src/context/calendarContext'
 
-import HabitComponent from '../src/components/habitComponent'
-import useColors from '../src/hooks/colors';
+import HabitComponent from '../../src/components/habitComponent'
+import useColors from '../../src/hooks/colors';
 
 const HomeScreen = () => {
 
@@ -41,6 +41,7 @@ const HomeScreen = () => {
             }}
           >
             <HabitComponent title={habit.name} icon={habit.icon} color={habit.color} />
+            
           </TouchableOpacity>
         ))
       ) : (

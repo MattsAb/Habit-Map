@@ -57,8 +57,9 @@ const getHabits = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('habits');
     setHabits(jsonValue != null ? JSON.parse(jsonValue) : [])
-  } catch (e) {
-    // error reading value
+  } catch (err) {
+    console.error('Failed to load habits from AsyncStorage', err);
+    setHabits([])
   }
 };
 getHabits()
@@ -68,8 +69,8 @@ useEffect(() => {
   const storeHabits = async () => {
     try {
       await AsyncStorage.setItem('habits', JSON.stringify(habits))
-    } catch (e) {
-      console.error('Failed to save habits', e)
+    } catch (err) {
+      console.error('Failed to save habits', err)
     }
   }
   storeHabits()

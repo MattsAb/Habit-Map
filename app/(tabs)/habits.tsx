@@ -1,19 +1,17 @@
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 
-import DeleteHabitModalComponent from '../src/components/modalComponents/deleteHabitModalComponent'
-import HabitCardComponent from '../src/components/habitCardComponent'
-import ButtonComponent from '../src/components/basicComponents/ButtonComponent'
-import { useHabits } from '../src/context/habitContext'
+import DeleteHabitModalComponent from '../../src/components/modalComponents/deleteHabitModalComponent'
+import HabitCardComponent from '../../src/components/habitCardComponent'
+import ButtonComponent from '../../src/components/basicComponents/ButtonComponent'
+import { useHabits } from '../../src/context/habitContext'
 import { useRouter } from 'expo-router'
-import useColors from '../src/hooks/colors'
-
+import useColors from '../../src/hooks/colors'
 
 const habits = () => {
 
 const {habits, deleteHabit} = useHabits()
 
-const [addModalVisibility, setAddModalVisibility] = useState(false)
 const [deleteModalVisibility, setDeleteModalVisibility] = useState(false)
 const [selectedhabit, setSelectedHabit] = useState({name: "", id: "", icon: "", color: ""})
 
@@ -23,7 +21,7 @@ const theme = useColors()
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
 
-        <ButtonComponent title='Add New Habit' color={theme.greenButton} onPress={() => router.push('./habitCreator')}/>
+        <ButtonComponent title='Add New Habit' color={theme.greenButton} onPress={() => router.push('../habitCreator')}/>
 
           { habits.length > 0 ? (<ScrollView showsVerticalScrollIndicator={false}>
             {habits.map((habit) => (

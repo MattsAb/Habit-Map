@@ -1,12 +1,12 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 
-import HabitComponent from '../src/components/habitComponent'
-import { useCalendar, Week } from '../src/context/calendarContext'
-import { useHabits } from '../src/context/habitContext'
-import { daysOfWeek } from '../src/context/calendarContext'
+import HabitComponent from '../../src/components/habitComponent'
+import { useCalendar, Week } from '../../src/context/calendarContext'
+import { useHabits } from '../../src/context/habitContext'
+import { daysOfWeek } from '../../src/context/calendarContext'
 import { Ionicons } from '@expo/vector-icons'
-import useColors from '../src/hooks/colors'
+import useColors from '../../src/hooks/colors'
 
 
 const map = () => {

@@ -85,8 +85,16 @@ const getWeekHabits = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('weekHabits');
     setWeekHabits(jsonValue != null ? JSON.parse(jsonValue) : [])
-  } catch (e) {
-    // error reading value
+  } catch (err) {
+    console.error('Failed to load week habits from AsyncStorage', err);
+    setWeekHabits({ 
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+    sunday: [],})
   }
 };
 getWeekHabits()
@@ -96,13 +104,12 @@ useEffect(() => {
   const storeWeekHabits = async () => {
     try {
       await AsyncStorage.setItem('weekHabits', JSON.stringify(weekHabits))
-    } catch (e) {
-      console.error('Failed to save habits', e)
+    } catch (err) {
+      console.error('Failed to save day habits', err)
     }
   }
   storeWeekHabits()
 }, [weekHabits])
-
     
   return (
     <GlobalCalendarContext.Provider value={{weekHabits, addHabitToDay, getToday, toggleCompletion}}>

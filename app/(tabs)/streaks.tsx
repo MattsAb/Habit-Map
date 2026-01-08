@@ -1,11 +1,11 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
-import StreakCardComponent from '../src/components/streakCardComponent'
-import { useHabits } from '../src/context/habitContext'
+import StreakCardComponent from '../../src/components/streakCardComponent'
+import { useHabits } from '../../src/context/habitContext'
 import { Tabs } from 'expo-router'
-import FilterModalComponent from '../src/components/modalComponents/filterModalComponent'
-import useColors from '../src/hooks/colors'
+import FilterModalComponent from '../../src/components/modalComponents/filterModalComponent'
+import useColors from '../../src/hooks/colors'
 
 const streaks = () => {
 
@@ -35,7 +35,7 @@ const streaks = () => {
       />
 
 
-    <View style={{ alignItems: "center", flex: 1, backgroundColor: theme.background}}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
 
        { habits.length > 0 ? (<ScrollView contentContainerStyle={{alignItems: "center"}} style ={{width: "100%"}}
        showsVerticalScrollIndicator={false}>
@@ -48,7 +48,8 @@ const streaks = () => {
                 streak={habit.streak}
                 totalCompletes={habit.totalCompletes}/>
             ))}
-          </ScrollView>) : (<View style={styles.noHabitsText}><Text> You don't have any habits </Text></View>)  }
+          </ScrollView>) : (<View style={styles.noHabitsText}><Text> You don't have any habits </Text></View>)}
+
           <FilterModalComponent 
           visibility={modalVisibility} 
           onClose={() => setModalVisibilty(false)}
@@ -58,6 +59,7 @@ const streaks = () => {
           onStreak={() => {setModalVisibilty(false)
             setSortOption('streak')
           }}/>
+
     </View>
     </>
   )
@@ -66,6 +68,10 @@ const streaks = () => {
 export default streaks
 
 const styles = StyleSheet.create({
+  container:{
+    alignItems: "center",
+    flex: 1
+  },
   noHabitsText: {
     justifyContent:"center",
      flex: 1

@@ -13,13 +13,13 @@ export const colors = {
         greenButton:'#39df39ff'
     },
     light: {
-        text: 'white',
+        text: 'black',
         title: '#201e2b',
         background: 'white',
-        navBackground: 'white',
+        navBackground: '#88b7e6ff',
         iconColour: '#000000ff',
-        iconColourFocused: '#286eafff',
-        uiBackground: '#d6d5e1',
+        iconColourFocused: '#ffffffff',
+        uiBackground: '#b3cfebff',
         redButton:"#d85353ff",
         greenButton:'#6ad66aff'
     }

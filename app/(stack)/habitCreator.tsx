@@ -1,14 +1,13 @@
-import { View, Text, Modal, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TextInput } from 'react-native'
 import React, { useState } from 'react'
-import { SegmentedButtons } from "react-native-paper";
 
-import HabitComponent from '../src/components/habitComponent'
-import ButtonComponent from '../src/components/basicComponents/ButtonComponent';
-import DropdownComponent from '../src/components/dropDownComponent';
-import ColorPickerComponent from '../src/components/colorPickerComponent';
-import { useHabits } from '../src/context/habitContext';
-import { useRouter } from 'expo-router';
-import useColors from '../src/hooks/colors';
+import HabitComponent from '../../src/components/habitComponent'
+import ButtonComponent from '../../src/components/basicComponents/ButtonComponent';
+import DropdownComponent from '../../src/components/dropDownComponent';
+import ColorPickerComponent from '../../src/components/colorPickerComponent';
+import { useHabits } from '../../src/context/habitContext';
+import { Stack, useRouter } from 'expo-router';
+import useColors from '../../src/hooks/colors';
 
 
 const habitCreator = () => {
@@ -24,18 +23,24 @@ const habitCreator = () => {
 
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
+
+        <Stack.Screen options={{headerTitle: "Create a Habit"}}/>
             <View style={[styles.habitContainer, {backgroundColor: theme.navBackground}]}>
+
                 <HabitComponent title={titleInput} icon={selectType} color={selectedColor}/>
+
                 <TextInput maxLength={25}
                 value={titleInput}
                 onChangeText={(value) => setTitleInput(value)}
                 placeholder='Habit Name...' 
                 placeholderTextColor={theme.text}
                 style={[styles.input, {backgroundColor: theme.navBackground, borderColor: theme.text, color: theme.text}]}/>
+
                 <DropdownComponent value={selectType} onChange={setSelectType}/>
-                <ColorPickerComponent onSelect={setSelectedColor}
-                />
+
+                <ColorPickerComponent onSelect={setSelectedColor}/>
             </View>
+            
             <View style={styles.buttonContainer}> 
                 <ButtonComponent title='Add Habit' color={theme.greenButton}
                 onPress={() => {

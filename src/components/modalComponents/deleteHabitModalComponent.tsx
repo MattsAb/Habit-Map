@@ -21,11 +21,11 @@ const DeleteHabitModalComponent = ({visibility, onDelete, onCancel, habitName, i
     <Modal transparent={true} animationType='fade' visible={visibility}>
         <View style={styles.container}>
             <View style={[styles.deleteBoxContainer, {backgroundColor: theme.background}]}>
-                <Text style={{fontWeight: "bold", fontSize: 20, color: theme.title}}> Delete {habitName} Habit? </Text>
+                <Text style={[styles.title,{color: theme.title}]}> Delete {habitName} Habit? </Text>
 
                 <HabitComponent title={habitName} icon={icon} color={color}/>
 
-                    <View style={{flexDirection: "row", marginVertical: 10,}}>
+                    <View style={styles.buttonContainer}>
                         <TouchableOpacity style={[styles.button, {backgroundColor: theme.redButton}]}
                             onPress={onDelete}
                         ><Text style={{color: "white"}}> Delete </Text></TouchableOpacity>
@@ -63,4 +63,12 @@ const styles = StyleSheet.create({
     width: "30%",
     alignItems: "center"
   },
+  title:{
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  buttonContainer:{
+    flexDirection: "row",
+    marginVertical: 10,
+  }
 })

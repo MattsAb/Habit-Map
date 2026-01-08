@@ -1,11 +1,9 @@
 import { View, Text, Modal, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useHabits } from '../../context/habitContext'
 import HabitComponent from '../habitComponent'
 import ButtonComponent from '../basicComponents/ButtonComponent'
-import { Habit } from '../../context/habitContext'
-import { Slot } from 'expo-router'
 import { useCalendar, Week} from '../../context/calendarContext'
 import useColors from '../../hooks/colors'
 

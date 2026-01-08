@@ -19,9 +19,9 @@ const DayComponent = ({day, totalHabits}: dayProps) => {
     <View style={{alignItems: "center"}}>
       <Text style={{color: theme.text}}> {day.substring(0,3)} </Text>
     <TouchableOpacity style={[styles.container, {backgroundColor: dayColor}]}
-    onPress={() =>  router.push(`/day/${day}`)
+    onPress={() =>  router.push(`/${day}`)
 }>
-      <Text style={{color: "white", fontWeight: "bold", fontSize: 20, shadowColor: "black", }}>{totalHabits ? `${totalHabits}` : '0'}</Text>
+      <Text style={styles.habitNumber}>{totalHabits ? `${totalHabits}` : '0'}</Text>
     </TouchableOpacity>
     </View>
   )
@@ -37,5 +37,11 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 10,
         marginHorizontal: 2
+    },
+    habitNumber:{
+      color: "white",
+      fontWeight: "bold",
+      fontSize: 20,
+      shadowColor: "black",
     }
 })

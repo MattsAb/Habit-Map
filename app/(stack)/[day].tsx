@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useHabits } from '../../src/context/habitContext'
 import { useCalendar, Week } from '../../src/context/calendarContext'
 import useColors from '../../src/hooks/colors'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function DayScreen() {
   const { day } = useLocalSearchParams<{ day: string }>()
@@ -27,7 +28,7 @@ export default function DayScreen() {
     <>
     <Stack.Screen options={{title: `${day}`}}/>
 
-    <View style={{alignItems: "center", flex: 1, backgroundColor: theme.background}}>
+    <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
 
     {dayHabits.length > 0 ? (
     <ScrollView contentContainerStyle={styles.list}>
@@ -46,7 +47,7 @@ export default function DayScreen() {
   ))}
 
     </ScrollView>) : (
-    <View style={{flex: 1, justifyContent: "center"}}>
+    <View style={styles.noHabitsText}>
         <Text style={{fontWeight: "bold"}}> You don't have any habits to do on {day} </Text>
     </View>)}
 
@@ -55,7 +56,7 @@ export default function DayScreen() {
             <ButtonComponent title='Select Habits' color={theme.greenButton} onPress={() => setModalVisibilty(true)}/>
         </View>
 
-    </View>
+    </SafeAreaView>
 
     <DayHabitModal 
     visibilty={modalVisibility} 
@@ -69,10 +70,18 @@ export default function DayScreen() {
 }
 
 const styles = StyleSheet.create({
+container:{
+  alignItems: "center",
+  flex: 1
+},
 list:{
     flexDirection: "row",
     flexWrap: "wrap",
     marginVertical: 10,
     justifyContent: "center"
   },
+noHabitsText:{
+  flex: 1,
+  justifyContent: "center"
+}
 })
