@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native'
-import React, { createContext, useContext, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import uuid from 'react-native-uuid';
 
 export type Habit = {
@@ -7,11 +7,13 @@ export type Habit = {
     streak: number,
     totalCompletes: number,
     id: string,
+    icon: string,
+    color: string,
 }
 
 type HabitContextType = {
   habits: Habit[]
-  createHabit: (name: string) => void
+  createHabit: (name: string, icon: string, color: string) => void
   deleteHabit: (id: string) => void
 }
 
@@ -30,23 +32,48 @@ export const useHabits = () => {
 
 const HabitContext = ({ children }: { children: React.ReactNode }) => {
 
-    const [habits, setHabits] = useState<Habit[]>([{name: "test", streak: 1, id: "1", totalCompletes: 1},
-      {name: "test2", streak: 2, id: "2", totalCompletes: 2},{name: "test3", streak: 0, id: "3", totalCompletes: 0},
-        {name: "test4", streak: 1, id: "4", totalCompletes: 1444}, {name: "test5", streak: 2, id: "5", totalCompletes: 2},{name: "test6", streak: 0, id: "6", totalCompletes: 0}
-    ])
+    const [habits, setHabits] = useState<Habit[]>([])
 
-    const createHabit = (name: string) => {
+    const createHabit = (name: string, icon: string, color: string) => {
         if (!name.trim()) return
 
         setHabits(prev => [
         ...prev,
-        { name, streak: 0,totalCompletes: 0, id: uuid.v4()}
+        { name,
+          streak: 0,
+          totalCompletes: 0,
+          id: uuid.v4(),
+          icon,
+          color}
         ])
     }
 
     const deleteHabit = (id: string) => {
         setHabits(prev => prev.filter(habit => habit.id !== id))
     }
+
+useEffect(() => {
+const getHabits = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('habits');
+    setHabits(jsonValue != null ? JSON.parse(jsonValue) : [])
+  } catch (e) {
+    // error reading value
+  }
+};
+getHabits()
+},[])
+
+useEffect(() => {
+  const storeHabits = async () => {
+    try {
+      await AsyncStorage.setItem('habits', JSON.stringify(habits))
+    } catch (e) {
+      console.error('Failed to save habits', e)
+    }
+  }
+  storeHabits()
+}, [habits])
 
 
   return (

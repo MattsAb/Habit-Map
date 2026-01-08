@@ -2,28 +2,34 @@ import { View, Text, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 import HabitComponent from '../habitComponent'
+import useColors from '../../hooks/colors'
 
 type deleteModalProps = {
   visibility: boolean,
   onCancel: () => void,
   onDelete: () => void,
   habitName: string,
+  icon: string,
+  color: string,
 }
 
-const DeleteHabitModalComponent = ({visibility, onDelete, onCancel, habitName}: deleteModalProps) => {
+const DeleteHabitModalComponent = ({visibility, onDelete, onCancel, habitName, icon, color}: deleteModalProps) => {
+
+  const theme = useColors()
+
   return (
     <Modal transparent={true} animationType='fade' visible={visibility}>
         <View style={styles.container}>
-            <View style={styles.deleteBoxContainer}>
-                <Text style={{fontWeight: "bold", fontSize: 20}}> Delete {habitName} Habit? </Text>
+            <View style={[styles.deleteBoxContainer, {backgroundColor: theme.background}]}>
+                <Text style={{fontWeight: "bold", fontSize: 20, color: theme.title}}> Delete {habitName} Habit? </Text>
 
-                <HabitComponent title={habitName}/>
+                <HabitComponent title={habitName} icon={icon} color={color}/>
 
                     <View style={{flexDirection: "row", marginVertical: 10,}}>
-                        <TouchableOpacity style={[styles.button, {backgroundColor: "#df7878ff"}]}
+                        <TouchableOpacity style={[styles.button, {backgroundColor: theme.redButton}]}
                             onPress={onDelete}
                         ><Text style={{color: "white"}}> Delete </Text></TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, {backgroundColor: "#df7878ff"}]}
+                        <TouchableOpacity style={[styles.button, {backgroundColor: theme.redButton}]}
                             onPress={onCancel}
                         ><Text style={{color: "white"}}> Cancel </Text></TouchableOpacity>
                     </View>

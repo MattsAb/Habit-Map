@@ -1,12 +1,13 @@
 import { View, Text, Modal, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 
 import { useHabits } from '../../context/habitContext'
 import HabitComponent from '../habitComponent'
 import ButtonComponent from '../basicComponents/ButtonComponent'
 import { Habit } from '../../context/habitContext'
 import { Slot } from 'expo-router'
-import { useCalendar, Week } from '../../context/calendarContext'
+import { useCalendar, Week} from '../../context/calendarContext'
+import useColors from '../../hooks/colors'
 
 type dayHabitModalProps = {
     visibilty: boolean,
@@ -20,14 +21,22 @@ const DayHabitModal = ({visibilty, onSelect, onCancel, day}: dayHabitModalProps)
     const [selection, setSelection] = useState<string[]>([])
 
     const {habits} = useHabits()
-    const {addHabitToDay} = useCalendar()
+    const {addHabitToDay, weekHabits} = useCalendar()
+
+    const theme = useColors()
+
+  useEffect(() => {
+    setSelection(weekHabits[day].map(h => h.habitId))
+  }, [day, visibilty])
+
+
 
   return (
     <Modal transparent={true} animationType='fade' visible={visibilty}>
         <View style={styles.container}>
-            <View style={styles.addBoxContainer}>
+            <View style={[styles.addBoxContainer, {backgroundColor: theme.background}]}>
 
-                <Text style={styles.header}> Select Habits </Text>
+                <Text style={[styles.header,{color: theme.title}]}> Select Habits </Text>
 
                 <ScrollView contentContainerStyle={styles.list}>
                     {habits.map((habit) => (
@@ -45,16 +54,18 @@ const DayHabitModal = ({visibilty, onSelect, onCancel, day}: dayHabitModalProps)
                         style={[styles.listItem, {backgroundColor: selection.includes(habit.id) ? "#8acf7cff" : "rgba(0,0,0,0)"}]}
                         key={habit.id}>
                             <HabitComponent
+                            color={habit.color}
+                            icon={habit.icon}
                             title={habit.name}/>
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
 
                 <View style={{flexDirection: "row"}}>
-                    <ButtonComponent title='Select' color='#6ad66aff' onPress={() => {
+                    <ButtonComponent title='Select' color={theme.greenButton} onPress={() => {
                         addHabitToDay(day, selection)
                         onSelect()}}/>
-                    <ButtonComponent title='Cancel' color='#df7878ff' onPress={onCancel}/>
+                    <ButtonComponent title='Cancel' color={theme.redButton} onPress={onCancel}/>
                 </View>
 
             </View>

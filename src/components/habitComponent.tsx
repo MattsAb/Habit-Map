@@ -1,17 +1,23 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { Ionicons } from "@expo/vector-icons"
+import useColors from '../hooks/colors'
 
 type habitProps = {
     title: string,
+    icon: string,
+    color: string,
 }
 
 
-const HabitComponent = ({title}: habitProps) => {
+const HabitComponent = ({title, icon, color}: habitProps) => {
+
+    const theme = useColors()
+
   return (
-    <View style={styles.container}>
-        <Ionicons name="person" size={50} color="white"/>
-        <Text style={styles.title}> {title} </Text>
+    <View style={[styles.container, {backgroundColor: color ? color : "grey"}]}>
+        <Ionicons name={icon as keyof typeof Ionicons.glyphMap} size={50} color={theme.title}/>
+        <Text style={[styles.title,{color: theme.title}]}> {title} </Text>
     </View>
   )
 }
@@ -20,7 +26,6 @@ export default HabitComponent
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#cc8e8eff",
         alignItems: "center",
         justifyContent: "center",
         width: 100,
@@ -30,6 +35,7 @@ const styles = StyleSheet.create({
     title: {
         color: "white",
         fontSize: 12,
-        textAlign: "center"
+        textAlign: "center",
+        marginBottom: 10
     }
 })

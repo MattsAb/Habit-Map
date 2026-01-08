@@ -1,5 +1,6 @@
 import { View, Text, Modal, StyleSheet, TouchableOpacity, Pressable } from 'react-native'
 import React from 'react'
+import useColors from '../../hooks/colors'
 
 type FilterModalProps = {
     onClose: () => void
@@ -9,21 +10,24 @@ type FilterModalProps = {
 }
 
 const FilterModalComponent = ({onClose, visibility, onStreak, onCompletions}: FilterModalProps) => {
+
+  const theme = useColors()
+
   return (
     <Modal transparent={true} animationType='fade' visible={visibility}>
         <Pressable style={styles.container} onPress={onClose}>
-            <View style={styles.BoxContainer}>
+            <View style={[styles.BoxContainer, {backgroundColor: theme.background}]}>
 
-                <Text> Filter By: </Text>
+                <Text style = {{color: theme.text}}> Filter By: </Text>
 
-                <TouchableOpacity style={styles.button}
+                <TouchableOpacity style={[styles.button,{backgroundColor: theme.uiBackground}]}
                 onPress={onStreak}>
-                <Text> Highest streak </Text>
+                <Text style={{color: theme.text}}> Highest streak </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}
+                <TouchableOpacity style={[styles.button,{backgroundColor: theme.uiBackground}]}
                 onPress={onCompletions}>
-                <Text> Most Completions </Text>
+                <Text style={{color: theme.text}}> Most Completions </Text>
                 </TouchableOpacity>
 
             </View>
@@ -42,7 +46,6 @@ container:{
     backgroundColor: 'rgba(52, 52, 52, 0.8)'
   },
   BoxContainer:{
-    backgroundColor: "white",
     width: "60%",
     height: "20%",
     borderRadius: 30,
@@ -53,6 +56,7 @@ container:{
     alignItems: "center",
     backgroundColor: "#e0e0e0ff",
     width: "90%",
-    padding: 10
+    padding: 10,
+    borderRadius: 20
   }
 })

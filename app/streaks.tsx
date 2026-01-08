@@ -5,12 +5,14 @@ import StreakCardComponent from '../src/components/streakCardComponent'
 import { useHabits } from '../src/context/habitContext'
 import { Tabs } from 'expo-router'
 import FilterModalComponent from '../src/components/modalComponents/filterModalComponent'
+import useColors from '../src/hooks/colors'
 
 const streaks = () => {
 
   const [modalVisibility, setModalVisibilty] = useState(false)
   const [sortOption, setSortOption] = useState<'streak' | 'totalCompletes'>('streak')
 
+  const theme = useColors()
 
   const {habits} = useHabits()
 
@@ -25,15 +27,15 @@ const streaks = () => {
     <Tabs.Screen
         options={{
           headerLeft: () => (
-            <TouchableOpacity style={styles.filterButton}
+            <TouchableOpacity style={[styles.filterButton, {backgroundColor: theme.greenButton}]}
             onPress={() => setModalVisibilty(true)}
-            ><Text style={{color: "white"}}> Filter </Text></TouchableOpacity>
+            ><Text style={{color: theme.text}}> Filter </Text></TouchableOpacity>
           ),
         }}
       />
 
 
-    <View style={{ alignItems: "center", flex: 1}}>
+    <View style={{ alignItems: "center", flex: 1, backgroundColor: theme.background}}>
 
        { habits.length > 0 ? (<ScrollView contentContainerStyle={{alignItems: "center"}} style ={{width: "100%"}}
        showsVerticalScrollIndicator={false}>
@@ -41,6 +43,8 @@ const streaks = () => {
               <StreakCardComponent
                 key={habit.id}
                 name={habit.name}
+                icon={habit.icon}
+                color={habit.color}
                 streak={habit.streak}
                 totalCompletes={habit.totalCompletes}/>
             ))}

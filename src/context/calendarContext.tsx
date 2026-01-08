@@ -1,20 +1,25 @@
-import { View, Text } from 'react-native'
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type Week = {
-  monday: string[]
-  tuesday: string[]
-  wednesday: string[]
-  thursday: string[]
-  friday: string[]
-  saturday: string[]
-  sunday: string[]
+export type day = {
+  habitId: string,
+  isCompleted: boolean
 }
 
+export type Week = {
+  monday: day[]
+  tuesday: day[]
+  wednesday: day[]
+  thursday: day[]
+  friday: day[]
+  saturday: day[]
+  sunday: day[]
+}
 export const daysOfWeek: (keyof Week)[] = ['sunday','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
 type CalendarContextType = {
     weekHabits: Week
+    toggleCompletion: (day :keyof Week,id: string) => void
     addHabitToDay: (day: keyof Week, habitIds: string[]) => void
     getToday: () => keyof Week
 }
@@ -33,20 +38,29 @@ export const useCalendar = () => {
 const CalendarContext = ({ children }: { children: React.ReactNode }) => {
 
     const [weekHabits, setWeekHabits] = useState<Week>({
-    monday: ['1','2','3','4','5','6'],
-    tuesday: ['1','2'],
+    monday: [],
+    tuesday: [],
     wednesday: [],
-    thursday: ['3','4', '5'],
+    thursday: [],
     friday: [],
-    saturday: [`1`,`2`,'3','4'],
+    saturday: [],
     sunday: [],
     })
 
-  const addHabitToDay = (day: keyof Week, habitIds: string[]) => {
-    setWeekHabits(prev => ({
+const addHabitToDay = (day: keyof Week, habitIds: string[]) => {
+  setWeekHabits(prev => {
+    const existing = prev[day]
+
+    const updated = habitIds.map(id => {
+      const found = existing.find(h => h.habitId === id)
+      return found ?? { habitId: id, completed: false }
+    })
+
+    return {
       ...prev,
-      [day]: habitIds
-    }))
+      [day]: updated,
+    }
+  })
 }
 
 const getToday = (): keyof Week =>{
@@ -55,9 +69,43 @@ const getToday = (): keyof Week =>{
   return daysOfWeek[date.getDay()]
 
 }
+
+const toggleCompletion = (day: keyof Week, habitId: string) => {
+  setWeekHabits(prev => ({
+    ...prev,
+    [day]: prev[day].map(h =>
+      h.habitId === habitId ? { ...h, isCompleted: true } : h
+    ),
+  }))
+  console.log(weekHabits[day])
+}
+
+useEffect(() => {
+const getWeekHabits = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('weekHabits');
+    setWeekHabits(jsonValue != null ? JSON.parse(jsonValue) : [])
+  } catch (e) {
+    // error reading value
+  }
+};
+getWeekHabits()
+},[])
+
+useEffect(() => {
+  const storeWeekHabits = async () => {
+    try {
+      await AsyncStorage.setItem('weekHabits', JSON.stringify(weekHabits))
+    } catch (e) {
+      console.error('Failed to save habits', e)
+    }
+  }
+  storeWeekHabits()
+}, [weekHabits])
+
     
   return (
-    <GlobalCalendarContext.Provider value={{weekHabits, addHabitToDay, getToday}}>
+    <GlobalCalendarContext.Provider value={{weekHabits, addHabitToDay, getToday, toggleCompletion}}>
         {children}
     </GlobalCalendarContext.Provider>
     

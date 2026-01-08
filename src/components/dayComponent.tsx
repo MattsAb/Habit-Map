@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useRouter } from 'expo-router'
+import useColors from '../hooks/colors'
 
 type dayProps = {
   day: string
@@ -10,12 +11,13 @@ type dayProps = {
 const DayComponent = ({day, totalHabits}: dayProps) => {
 
     const router = useRouter()
+    const theme = useColors()
 
     const dayColor = totalHabits ? `rgba(${200 - totalHabits * 10}, 255, ${200 - totalHabits * 10}, 1)` : "grey"
 
   return (
     <View style={{alignItems: "center"}}>
-      <Text> {day.substring(0,3)} </Text>
+      <Text style={{color: theme.text}}> {day.substring(0,3)} </Text>
     <TouchableOpacity style={[styles.container, {backgroundColor: dayColor}]}
     onPress={() =>  router.push(`/day/${day}`)
 }>
